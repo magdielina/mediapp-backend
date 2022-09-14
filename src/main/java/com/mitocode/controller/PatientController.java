@@ -44,6 +44,7 @@ public class PatientController {
 //        Patient obj = service.save(patient);
 //        return new ResponseEntity<>(obj, CREATED);
 //    }
+
     @PostMapping
     public ResponseEntity<Void> save(@RequestBody Patient patient){
         Patient obj = service.save(patient);
