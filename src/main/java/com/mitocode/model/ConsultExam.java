@@ -11,6 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @ToString
 @IdClass(ConsultExamPK.class)
+@Entity
 public class ConsultExam {
 
     @Id

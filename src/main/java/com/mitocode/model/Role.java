@@ -16,7 +16,7 @@ public class Role {
 
     @Id
     @EqualsAndHashCode.Include
-    private Integer specialityId;
+    private Integer roleId;
 
     @Column(nullable = false, length = 50)
     private String name;
