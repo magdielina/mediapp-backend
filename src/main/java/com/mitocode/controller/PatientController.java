@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,7 +49,7 @@ public class PatientController {
 //    }
 
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody PatientDTO dto){
+    public ResponseEntity<Void> save(@Valid @RequestBody PatientDTO dto){
         Patient obj = service.save(mapper.map(dto, Patient.class));
         //localhost:8080/patients/5
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getPatientId()).toUri();
