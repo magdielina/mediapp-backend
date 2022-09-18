@@ -4,6 +4,8 @@ import com.mitocode.exception.ModelNotFoundException;
 import com.mitocode.model.Patient;
 import com.mitocode.service.impl.PatientServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -12,6 +14,8 @@ import java.net.URI;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.*;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/patients")
@@ -67,6 +71,14 @@ public class PatientController {
         return new ResponseEntity<>(NO_CONTENT);
     }
 
+    @GetMapping("/hateoas/{id}")
+    public EntityModel<Patient> findByIdhateoas(@PathVariable("id") Integer id){
+        Patient patient = getById(id);
+        EntityModel<Patient> resource = EntityModel.of(patient);
+        WebMvcLinkBuilder link = linkTo(methodOn(this.getClass()).findById(id));
+        resource.add(link.withRel("patient-info"));
+        return resource;
+    }
 
 
 //    @GetMapping(produces = "application/xml")

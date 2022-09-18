@@ -29,7 +29,6 @@ public class User {
     @Column(nullable = false)
     private boolean enabled;
 
-
     @ManyToMany
     @JoinTable(name = "user_role",
                 joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "userId"),
