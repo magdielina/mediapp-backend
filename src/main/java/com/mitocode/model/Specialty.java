@@ -12,12 +12,12 @@ import javax.persistence.*;
 @ToString
 @Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Speciality {
+public class Specialty {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private Integer specialityId;
+    private Integer specialtyId;
 
     @Column(nullable = false, length = 50)
     private String name;

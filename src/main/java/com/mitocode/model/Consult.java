@@ -31,7 +31,7 @@ public class Consult {
 
     @ManyToOne
     @JoinColumn(name = "speciality_id", nullable = false, foreignKey = @ForeignKey(name = "FK_CONSULT_SPECIALITY"))
-    private Speciality speciality;
+    private Specialty speciality;
 
     @Column(length = 3, nullable = false)
     private String numConsult;
