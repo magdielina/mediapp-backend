@@ -1,6 +1,5 @@
 package com.mitocode.model;
 
-
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,13 +9,12 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Entity
 public class Specialty {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
     private Integer specialtyId;
 
     @Column(nullable = false, length = 50)
@@ -24,5 +22,4 @@ public class Specialty {
 
     @Column(nullable = false, length = 100)
     private String description;
-
 }

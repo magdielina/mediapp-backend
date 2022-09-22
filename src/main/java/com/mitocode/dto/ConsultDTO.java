@@ -1,5 +1,6 @@
 package com.mitocode.dto;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -22,7 +23,7 @@ public class ConsultDTO {
     private MedicDTO medic;
 
     @NotNull
-    private SpecialtyDTO speciality;
+    private SpecialtyDTO specialty;
 
     @NotNull
     private String numConsult;
@@ -30,6 +31,7 @@ public class ConsultDTO {
     @NotNull
     private LocalDateTime consultDate;
 
+    @JsonManagedReference
     @NotNull
     private List<ConsultDetailDTO> details;
 }

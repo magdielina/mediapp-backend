@@ -1,5 +1,6 @@
 package com.mitocode.dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.mitocode.model.Consult;
 import lombok.*;
 
@@ -18,6 +19,7 @@ public class ConsultDetailDTO {
     @EqualsAndHashCode.Include
     private Integer detailId;
 
+    @JsonBackReference
     private ConsultDTO consult;
 
     @NotNull
