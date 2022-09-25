@@ -24,6 +24,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 //@RequestMapping(value = {"/patients", "patients2"})
 @RequestMapping("/patients")
+//@CrossOrigin(origins = "http://localhost:4200")
 public class PatientController {
 
     @Autowired
