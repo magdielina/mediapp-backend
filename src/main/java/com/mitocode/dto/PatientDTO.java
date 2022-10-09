@@ -1,5 +1,6 @@
 package com.mitocode.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.validation.constraints.Email;
@@ -20,6 +21,7 @@ public class PatientDTO {
 
     @NotNull
     @Size(min = 3, message = "{firstName.size}")
+//    @JsonProperty(value = "nombre") // Cambia el parametro en el Json
     private String firstName;
 
     @NotEmpty
