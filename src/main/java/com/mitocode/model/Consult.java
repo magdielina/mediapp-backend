@@ -12,8 +12,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Entity
 public class Consult {
 
     @Id
@@ -40,7 +40,8 @@ public class Consult {
     private LocalDateTime consultDate;
     // Spring Boot 1.5 -> pom.xml jsr310 data-types
 
-    @OneToMany(mappedBy = "consult", cascade = {CascadeType.ALL}, orphanRemoval = true)
+//    @OneToMany(mappedBy = "consult", cascade = {CascadeType.ALL}, orphanRemoval = true, fetch = FetchType.LAZY) //By DEFAULT
+    @OneToMany(mappedBy = "consult", cascade = {CascadeType.ALL}, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<ConsultDetail> details;
 
 }

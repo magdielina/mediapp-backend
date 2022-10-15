@@ -2,6 +2,7 @@ package com.mitocode.controller;
 
 import com.mitocode.dto.ConsultDTO;
 import com.mitocode.dto.ConsultListExamDTO;
+import com.mitocode.dto.FilterConsultDTO;
 import com.mitocode.exception.ModelNotFoundException;
 import com.mitocode.model.Consult;
 import com.mitocode.model.Exam;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -97,6 +99,21 @@ public class ConsultController {
         }
         return obj;
     }
+
+    @PostMapping("/search/others")
+    public ResponseEntity<List<ConsultDTO>> searchByOthers(@RequestBody FilterConsultDTO filterDTO) {
+        List<Consult> consults = service.search(filterDTO.getDni(), filterDTO.getFullName());
+        List<ConsultDTO> consultsDTO = mapper.map(consults, new TypeToken<List<ConsultDTO>>(){}.getType());
+        return new ResponseEntity<>(consultsDTO, OK);
+    }
+
+    @GetMapping("/search/date")
+    public ResponseEntity<List<ConsultDTO>> searchByDates(@RequestParam(value = "date1") String date1, @RequestParam(value = "date2") String date2){
+        List<Consult> consults = service.searchByDates(LocalDateTime.parse(date1), LocalDateTime.parse(date2));
+        List<ConsultDTO> consultsDTO = mapper.map(consults, new TypeToken<List<ConsultDTO>>(){}.getType());
+        return new ResponseEntity<>(consultsDTO, OK);
+    }
+
 
 //    @GetMapping(produces = "application/xml")
 //    @GetMapping
