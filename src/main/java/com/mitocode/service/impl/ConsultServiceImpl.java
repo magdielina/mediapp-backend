@@ -1,5 +1,6 @@
 package com.mitocode.service.impl;
 
+import com.mitocode.dto.ConsultProcDTO;
 import com.mitocode.model.Consult;
 import com.mitocode.model.Exam;
 import com.mitocode.repo.IConsultExamRepo;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -43,5 +45,18 @@ public class ConsultServiceImpl extends CRUDImpl<Consult, Integer> implements IC
     @Override
     public List<Consult> searchByDates(LocalDateTime date1, LocalDateTime date2) {
         return consultRepo.searchByDates(date1, date2.plusDays(1));
+    }
+
+    @Override
+    public List<ConsultProcDTO> callProcedureOrFunction() {
+        List<ConsultProcDTO> consults =  new ArrayList<>();
+
+        consultRepo.callProcedureOrFunction().forEach(x -> {
+            ConsultProcDTO dto = new ConsultProcDTO();
+            dto.setQuantity((Integer) x[0]);
+            dto.setConsultDate((String) x[1]);
+            consults.add(dto);
+        });
+        return consults;
     }
 }

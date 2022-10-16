@@ -2,6 +2,7 @@ package com.mitocode.controller;
 
 import com.mitocode.dto.ConsultDTO;
 import com.mitocode.dto.ConsultListExamDTO;
+import com.mitocode.dto.ConsultProcDTO;
 import com.mitocode.dto.FilterConsultDTO;
 import com.mitocode.exception.ModelNotFoundException;
 import com.mitocode.model.Consult;
@@ -112,6 +113,12 @@ public class ConsultController {
         List<Consult> consults = service.searchByDates(LocalDateTime.parse(date1), LocalDateTime.parse(date2));
         List<ConsultDTO> consultsDTO = mapper.map(consults, new TypeToken<List<ConsultDTO>>(){}.getType());
         return new ResponseEntity<>(consultsDTO, OK);
+    }
+
+    @GetMapping("/callProcedure")
+    public ResponseEntity<List<ConsultProcDTO>> callProcedureOrFunction(){
+        List<ConsultProcDTO> consults = service.callProcedureOrFunction();
+        return new ResponseEntity<>(consults, OK);
     }
 
 
