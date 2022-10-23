@@ -7,13 +7,21 @@ import com.mitocode.repo.IConsultExamRepo;
 import com.mitocode.repo.IConsultRepo;
 import com.mitocode.repo.IGenericRepo;
 import com.mitocode.service.IConsultService;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ConsultServiceImpl extends CRUDImpl<Consult, Integer> implements IConsultService {
@@ -58,5 +66,18 @@ public class ConsultServiceImpl extends CRUDImpl<Consult, Integer> implements IC
             consults.add(dto);
         });
         return consults;
+    }
+
+    @Override
+    public byte[] generateReport() throws Exception {
+        byte[] data = null;
+
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("txt_title", "Consults by date");
+
+        File file = new ClassPathResource("/reports/consults.jasper").getFile();
+        JasperPrint print = JasperFillManager.fillReport(file.getPath(), parameters, new JRBeanCollectionDataSource(callProcedureOrFunction()));
+        data = JasperExportManager.exportReportToPdf(print);
+        return data;
     }
 }

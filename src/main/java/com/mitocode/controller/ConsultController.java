@@ -13,6 +13,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -119,6 +120,13 @@ public class ConsultController {
     public ResponseEntity<List<ConsultProcDTO>> callProcedureOrFunction(){
         List<ConsultProcDTO> consults = service.callProcedureOrFunction();
         return new ResponseEntity<>(consults, OK);
+    }
+
+    @GetMapping(value = "/generateReport", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)//    @GetMapping(value = "/generateReport", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<byte[]> generateReport() throws Exception{
+        byte[] data = null;
+        data = service.generateReport();
+        return   new ResponseEntity<>(data, OK);
     }
 
 
