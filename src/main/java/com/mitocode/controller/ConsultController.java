@@ -7,7 +7,10 @@ import com.mitocode.dto.FilterConsultDTO;
 import com.mitocode.exception.ModelNotFoundException;
 import com.mitocode.model.Consult;
 import com.mitocode.model.Exam;
+import com.mitocode.model.MediaFile;
+import com.mitocode.service.IMediaFileService;
 import com.mitocode.service.impl.ConsultServiceImpl;
+import com.mitocode.service.impl.MediaFileServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -34,6 +38,9 @@ public class ConsultController {
 
     @Autowired
     private ConsultServiceImpl service;
+
+    @Autowired
+    private IMediaFileService mfService;
 
     @Autowired
     private ModelMapper mapper;
@@ -128,6 +135,20 @@ public class ConsultController {
         data = service.generateReport();
         return   new ResponseEntity<>(data, OK);
     }
+
+    @PostMapping(value = "/saveFile", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<Void> saveFile(@RequestParam("file") MultipartFile file) throws Exception { //@RequestPart("medic") Medic medic
+        MediaFile mf = new MediaFile();
+        mf.setFileType(file.getContentType());
+        mf.setFileName(file.getOriginalFilename());
+        mf.setValue(file.getBytes());
+
+        mfService.save(mf);
+
+        return new ResponseEntity<>(OK);
+    }
+
+
 
 
 //    @GetMapping(produces = "application/xml")
