@@ -131,8 +131,7 @@ public class ConsultController {
 
     @GetMapping(value = "/generateReport", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)//    @GetMapping(value = "/generateReport", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<byte[]> generateReport() throws Exception{
-        byte[] data = null;
-        data = service.generateReport();
+        byte[] data = service.generateReport();
         return   new ResponseEntity<>(data, OK);
     }
 
@@ -146,6 +145,12 @@ public class ConsultController {
         mfService.save(mf);
 
         return new ResponseEntity<>(OK);
+    }
+
+    @GetMapping(value = "/readFile/{fileId}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)//    @GetMapping(value = "/generateReport", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<byte[]> readFile(@PathVariable("fileId") Integer fileId) throws Exception{
+        byte[] arr = mfService.findById(fileId).getValue();
+        return   new ResponseEntity<>(arr, OK);
     }
 
 
