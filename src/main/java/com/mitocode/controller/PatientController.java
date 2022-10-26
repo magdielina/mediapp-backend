@@ -6,6 +6,8 @@ import com.mitocode.model.Patient;
 import com.mitocode.service.impl.PatientServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
@@ -78,6 +80,12 @@ public class PatientController {
         WebMvcLinkBuilder link = linkTo(methodOn(this.getClass()).findById(id));
         resource.add(link.withRel("patient-info"));
         return resource;
+    }
+
+    @GetMapping("/pageable")
+    public ResponseEntity<Page<PatientDTO>> listPage(Pageable pageable){
+        Page<PatientDTO> page = service.listPage(pageable).map(p -> mapper.map(p, PatientDTO.class));
+        return new ResponseEntity<>(page, OK);
     }
 
     private Patient getById(Integer id){
