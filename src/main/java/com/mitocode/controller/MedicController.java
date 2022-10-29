@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -31,6 +32,8 @@ public class MedicController {
     @Autowired
     private ModelMapper mapper;
 
+//    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
+//    @PreAuthorize("@authServiceImpl.hasAccess('findAll')")
     @GetMapping
     public ResponseEntity<List<MedicDTO>> findAll(){
         List<MedicDTO> list = service.findAll().stream().map(p -> mapper.map(p, MedicDTO.class)).collect(Collectors.toList());
