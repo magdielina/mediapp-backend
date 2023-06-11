@@ -6,5 +6,5 @@ public interface IUserRepo extends IGenericRepo<User, Integer>  {
 
     //FROM user WHERE username = ?
     // Derived Query
-    User findOneByUsername(String userName);
+    User findOneByUsername(String username);
 }

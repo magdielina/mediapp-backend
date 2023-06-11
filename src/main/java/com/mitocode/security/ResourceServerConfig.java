@@ -41,6 +41,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 //                .antMatchers("/medics/**" ).hasAuthority("ADMIN") // Restriction to path (Controller)
                 .antMatchers("/medics/**" ).authenticated()
                 .antMatchers("/menus/**" ).authenticated()
+                .antMatchers("/login/**" ).permitAll()
                 .antMatchers("/tokens/anulate/**" ).permitAll()
                 .antMatchers("/tokens/**" ).authenticated()
                 .antMatchers("/consultsexams/**" ).authenticated()
