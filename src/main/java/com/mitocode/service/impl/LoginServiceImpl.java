@@ -10,8 +10,8 @@ import com.mitocode.service.ILoginService;
 @Service
 public class LoginServiceImpl implements ILoginService{
 
-    @Autowired
-    private BCryptPasswordEncoder bcrypt;
+//    @Autowired
+//    private BCryptPasswordEncoder bcrypt;
 
     @Autowired
     private ILoginRepo repo;
@@ -23,6 +23,6 @@ public class LoginServiceImpl implements ILoginService{
 
     @Override
     public void changePassword(String password, String username) {
-        repo.changePassword(bcrypt.encode(password), username);
+//        repo.changePassword(bcrypt.encode(password), username);
     }
 }
