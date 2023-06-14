@@ -49,7 +49,7 @@ public class LoginController {
             tokenService.save(token);
 
             Mail mail = new Mail();
-            mail.setFrom("email.prueba.demo@gmail.com");
+            mail.setFrom("medi.app.service@gmail.com");
             mail.setTo(us.getUsername());
             mail.setSubject("RESTABLECER CONTRASEÑA - MEDIAPP");
 

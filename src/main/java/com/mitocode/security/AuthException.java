@@ -17,9 +17,9 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 //Cuarta clase, clase de apoyo
-public class AuthException implements AuthenticationEntryPoint {
+public class AuthException {//implements AuthenticationEntryPoint {
 
-    @Override
+    /*@Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException arg2)
             throws IOException, ServletException {
         final Map<String, Object> mapException = new HashMap<>();
@@ -36,6 +36,6 @@ public class AuthException implements AuthenticationEntryPoint {
         final ObjectMapper mapper = new ObjectMapper();
         mapper.findAndRegisterModules();
         mapper.writeValue(response.getOutputStream(), mapException);
-    }
+    }*/
 
 }

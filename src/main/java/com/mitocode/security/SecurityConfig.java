@@ -3,6 +3,9 @@ package com.mitocode.security;
 import javax.sql.DataSource;
 
 
+import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
+import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
+import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +18,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
@@ -22,14 +26,17 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.web.authentication.session.NullAuthenticatedSessionStrategy;
+import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 
 //Primera Clase
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(jsr250Enabled = true)
+public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter { //WebSecurityConfigurerAdapter{
 
-    @Value("${security.signing-key}")
+   /* @Value("${security.signing-key}")
     private String signingKey;
 
     @Value("${security.security-realm}")
@@ -95,6 +102,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         defaultTokenServices.setSupportRefreshToken(true);
         defaultTokenServices.setReuseRefreshToken(false);
         return defaultTokenServices;
+    }*/
+   @Autowired
+   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+       KeycloakAuthenticationProvider keycloakAuthenticationProvider = keycloakAuthenticationProvider();
+       keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(new SimpleAuthorityMapper());
+       auth.authenticationProvider(keycloakAuthenticationProvider);
+   }
+
+    @Bean
+    @Override
+    protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
+        return new NullAuthenticatedSessionStrategy();
     }
 
+    @Bean
+    public static KeycloakSpringBootConfigResolver KeycloakConfigResolver() {
+        return new KeycloakSpringBootConfigResolver();
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        super.configure(http);
+        http.authorizeRequests().antMatchers("/login/**" ).permitAll();
+        http.authorizeRequests().antMatchers("/tokens/user/**" ).permitAll();
+        //http.authorizeRequests().antMatchers("/menus/**" ).permitAll();
+        http.authorizeRequests().anyRequest().authenticated();
+        http.csrf().disable();
+    }
 }
