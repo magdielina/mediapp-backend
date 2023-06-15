@@ -14,4 +14,7 @@ public interface IMenuRepo extends IGenericRepo<Menu, Integer>{
             "WHERE u.username = :username", nativeQuery = true)
     List<Menu> getMenusByUsername(String username);
 
+    //Para KeyCloak
+    @Query(value="select mr.id_menu, r.id_role, r.name from menu_role mr inner join role r on mr.id_role = r.id_role order by mr.id_menu, id_role", nativeQuery = true)
+    List<Object[]> getMenuRoles();
 }

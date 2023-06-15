@@ -29,12 +29,20 @@ public class MenuController {
         return new ResponseEntity<>(menusDTO, HttpStatus.OK);
     }
 
-    @PostMapping("/user")
+    /*@PostMapping("/user")
         public ResponseEntity<List<MenuDTO>> getMenusByUser(@RequestBody String username) throws Exception{
 //        public ResponseEntity<List<MenuDTO>> getMenusByUser() throws Exception{
 //        List<Menu> menus = service.getMenusByUsername();
         List<Menu> menus = service.getMenusByUsername(username);
 
+        List<MenuDTO> menusDTO = modelMapper.map(menus, new TypeToken<List<MenuDTO>>() {}.getType());
+        return new ResponseEntity<>(menusDTO, HttpStatus.OK);
+    }*/
+
+    //KeyCloak
+    @PostMapping("/user")
+    public ResponseEntity<List<MenuDTO>> getMenusByUser(@RequestBody String username) throws Exception{
+        List<Menu> menus = service.getMenuRoles(username);
         List<MenuDTO> menusDTO = modelMapper.map(menus, new TypeToken<List<MenuDTO>>() {}.getType());
         return new ResponseEntity<>(menusDTO, HttpStatus.OK);
     }
