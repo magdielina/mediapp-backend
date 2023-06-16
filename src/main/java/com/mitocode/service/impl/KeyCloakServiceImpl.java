@@ -21,7 +21,7 @@ public class KeyCloakServiceImpl implements IKeyCloakService {
     public boolean addUser(User user) throws Exception{
         boolean rpta;
         //USUARIO CON PRIVILEGIOS de manejo total de realm para poder agregar, debe ser un ADMIN, algun usuario fijo //usuario.getUsername() falla, porque ese usuario no existe
-        RealmResource realmResource = KeyCloakConfig.getInstance("medi.app.service@gmail.com").realm(KeyCloakConfig.realm);
+        RealmResource realmResource = KeyCloakConfig.getInstance("magdiellinares@gmail.com").realm(KeyCloakConfig.realm);
         UsersResource usersResource = realmResource.users();
 
         List<UserRepresentation> lista = usersResource.search(user.getUsername(), true);

@@ -126,7 +126,7 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter { //Web
         super.configure(http);
         http.authorizeRequests().antMatchers("/login/**" ).permitAll();
         http.authorizeRequests().antMatchers("/tokens/user/**" ).permitAll();
-        //http.authorizeRequests().antMatchers("/menus/**" ).permitAll();
+//        http.authorizeRequests().antMatchers("/menus/**" ).permitAll();
         http.authorizeRequests().anyRequest().authenticated();
         http.csrf().disable();
     }

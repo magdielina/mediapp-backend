@@ -12,7 +12,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class MenuServiceImpl extends CRUDImpl<Menu, Integer> implements IMenuService {
@@ -39,7 +41,8 @@ public class MenuServiceImpl extends CRUDImpl<Menu, Integer> implements IMenuSer
         String userId = ur.search(username, true).get(0).getId(); //sin true, busca coincidencias
 
         List<RoleRepresentation> roles = ur.get(userId).roles().realmLevel().listAll();
-        List<Menu> menus = new ArrayList<>();
+//        List<Menu> menus = new ArrayList<>();
+        Set<Menu> menus = new HashSet<>();
 
         repo.getMenuRoles().forEach(x -> {
             roles.forEach(r -> {
@@ -50,7 +53,6 @@ public class MenuServiceImpl extends CRUDImpl<Menu, Integer> implements IMenuSer
                 }
             });
         });
-
-        return menus;
+        return List.copyOf(menus);
     }
 }
